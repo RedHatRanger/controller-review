@@ -1,0 +1,21 @@
+---
+- name: Deploy a simple web page
+  hosts: all
+  become: true
+  tasks:
+    - name: Install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+
+    - name: Ensure httpd is started and enabled
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Create an index.html
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          Successful playbook run from automation controller.
